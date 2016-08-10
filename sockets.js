@@ -201,6 +201,7 @@ if (cluster.isMaster) {
 		let cssserver = new nodestatic.Server('./config');
 		let avatarserver = new nodestatic.Server('./config/avatars');
 		let staticserver = new nodestatic.Server('./static');
+		let dataserver = new nodestatic.Server('./data');
 		let staticRequestHandler = (request, response) => {
 			// console.log("static rq: " + request.socket.remoteAddress + ":" + request.socket.remotePort + " -> " + request.socket.localAddress + ":" + request.socket.localPort + " - " + request.method + " " + request.url + " " + request.httpVersion + " - " + request.rawHeaders.join('|'));
 			request.resume();
@@ -241,6 +242,9 @@ if (cluster.isMaster) {
 							}
 						}
 					}
+				} else if (request.url.substr(0, 6) === '/data/') {
+					request.url = request.url.substr(5);
+					server = dataserver;
 				} else {
 					if (/^\/([A-Za-z0-9][A-Za-z0-9-]*)\/?$/.test(request.url)) {
 						request.url = '/';
