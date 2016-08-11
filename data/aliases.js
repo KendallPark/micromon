@@ -31,6 +31,7 @@ exports.BattleAliases = {
 	"inverse": "Inverse Battle",
 	"aaa": "Almost Any Ability",
 	"monorandom": "Monotype Random Battle",
+	"microrandom": "Micro Random",
 
 	// mega evos
 	"maero": "Aerodactyl-Mega",
@@ -393,6 +394,7 @@ exports.BattleAliases = {
 	"twave": "Thunder Wave",
 	"web": "Sticky Web",
 	"wow": "Will-O-Wisp",
+	"meningitis": "Dizzy Punch",
 
 	// Japanese names
 	"birijion": "Virizion",
