@@ -421,6 +421,7 @@ exports.BattleAliases = {
 	// I'll autogenerate them at some point
 
 	// Micro aliases
+	meningitis: "Dizzy Punch",
 	capsule: 'Defense Curl',
 	abscess: 'Ember',
 	pneumonia: 'Surf',

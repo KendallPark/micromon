@@ -3,10 +3,10 @@
 exports.BattleMovedex = {
   dizzypunch: {
     inherit: true,
+    name: "Meningitis",
     accuracy: 60,
     desc: "Has a 50% chance to confuse the target.",
     shortDesc: "50% chance to confuse the target.",
-    name: "Meningitis",
     secondary: {
       chance: 50,
       volatileStatus: 'confusion',
