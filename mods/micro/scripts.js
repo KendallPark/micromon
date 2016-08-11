@@ -20,8 +20,10 @@ exports.BattleScripts = {
 		let pokemonPool = [];
     for (let id in this.data.FormatsData) {
       // FIXME: Not ES-compliant
-      if (n++ > 6 || !this.data.FormatsData[id].randomBattleMoves) continue;
-      pokemonPool.push(id);
+      console.log(this.data.FormatsData[id]);
+      if (n++ <= 151 && this.data.FormatsData[id] && this.data.FormatsData[id].randomBattleMoves && this.data.FormatsData[id].category === "micro") {
+        pokemonPool.push(id);
+      }
     }
 
     console.log(pokemonPool.length);
@@ -49,7 +51,6 @@ exports.BattleScripts = {
     let hasMove = {};
     let counter = {};
     let setupType = '';
-    let level = 100;
 
     // Add the mandatory move
     if (template.essentialMove) {
@@ -62,6 +63,24 @@ exports.BattleScripts = {
         moves.push(moveid);
       } // End of the check for more than 4 moves on moveset.
     } while (moves.length < 4 && movePool.length);
+
+    let levelScale = {
+      LC: 96,
+      NFE: 90,
+      UU: 85,
+      BL: 83,
+      OU: 79,
+      Uber: 74,
+    };
+    // Hollistic judgment.
+    let customScale = {
+      Caterpie: 99, Kakuna: 99, Magikarp: 99, Metapod: 99, Weedle: 99, Pichu: 99, Smoochum: 99,
+      Clefairy: 95, "Farfetch'd": 99, Igglybuff: 99, Jigglypuff: 99, Ditto: 99, Mewtwo: 70,
+      Dragonite: 85, Cloyster: 83, Staryu: 90,
+    };
+
+    let level = levelScale[template.tier] || 90;
+    if (customScale[template.name]) level = customScale[template.name];
 
     return {
       name: template.nickname || template.name,
