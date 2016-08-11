@@ -6,8 +6,8 @@
  * This generation inherits all the changes from older generations, that must be taken into account when editing code.
  */
 exports.BattleScripts = {
-  inherit: 'gen1',
-  gen: 1,
+  inherit: 'gen2',
+  gen: 2,
   debug: function (activity) {
     if (this.getFormat().debug) {
       this.add('debug', activity);

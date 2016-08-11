@@ -1012,18 +1012,19 @@ exports.Formats = [
 	// 	debug: true,
 	// 	ruleset: ['Pokemon', 'HP Percentage Mod', 'Cancel Mod'],
 	// },
-	// {
-	// 	name: "[Gen 2] OU",
-	// 	desc: [
-	// 		"&bullet; <a href=\"https://www.smogon.com/forums/threads/3503082/\">GSC OU Viability Ranking</a>",
-	// 		"&bullet; <a href=\"https://www.smogon.com/forums/posts/6431086/\">GSC Sample Teams</a>",
-	// 	],
-	// 	section: "Past Generations",
-	//
-	// 	mod: 'gen2',
-	// 	ruleset: ['Pokemon', 'Standard'],
-	// 	banlist: ['Uber'],
-	// },
+	{
+		name: "[Gen 2] OU",
+		desc: [
+			"&bullet; <a href=\"https://www.smogon.com/forums/threads/3503082/\">GSC OU Viability Ranking</a>",
+			"&bullet; <a href=\"https://www.smogon.com/forums/posts/6431086/\">GSC Sample Teams</a>",
+		],
+		section: "Past Generations",
+
+		mod: 'gen2',
+		ruleset: ['Pokemon', 'Standard'],
+		banlist: ['Uber'],
+		searchShow: false,
+	},
 	// {
 	// 	name: "[Gen 2] Ubers",
 	// 	desc: [
