@@ -43,16 +43,17 @@ exports.BattleFormatsData = {
 	},
 	onix: {
 		nickname: "Clostridium difficile",
-		randomBattleMoves: ["diarrhea", "megacolon", "spores", "opportunity", "toxinaandb"],
+		randomBattleMoves: ["diarrhea", "toxicmegacolon", "endospore", "opportunity", "toxinaandb"],
+		essentialMove: "pmc",
 		category: "micro",
-		types: ["Gram+", "Bacillus", "Anaerobic"],
+		types: ["Gram+", "Bacillus", "Obl Anaerobe", "Spore-Forming", "Motile"],
 		weaknesses:  ["metronidazole", "vancomycin", "fidaxomycin", "fecaltransplant"],
 		resistances: ["clindamycin", "ampicillin", "amoxicillin"],
 	},
 	jynx: {
 		nickname: "Neisseria gonorrhoeae",
 		randomBattleMoves: ["pid", "dermatitis", "tenosynovitis", "fastidious", "motility", "typeivpili", "urethritis", "cervicitis", "pharyngitis", "conjunctivitis", "orchitis", "proctitis"],
-		essentialMove: "std",
+		essentialMove: "sti",
 		category: "micro",
 		types: ["Gram-", "Diplococci"],
 		weaknesses: ["ceftriaxone"],
@@ -65,11 +66,15 @@ exports.BattleFormatsData = {
 	},
 	ekans: {
 		nickname: "Treponema pallidum",
-		randomBattleMoves: ["cgd", "congenitaldefect", "endoflagellate"],
+		randomBattleMoves: ["mimic", "congenitaldefect", "endoflagellate"],
 		essentialMove: "syphilis",
 		category: "micro",
 		types: ["Gram-"],
 		weaknesses: ["penicillin"]
-	}
+	},
+	miltank: {
+		nickname: "Beta lactams",
+		randomBattleMoves: ["ceftriaxone", "penicillin", "methicillin", "ampicillin",],
+	},
 
 }
