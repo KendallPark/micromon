@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<!--
+               .............
+           ,...................
+         ,..................========
+        ....~=##############=======+
+       ...##################=======.
+      ..=######+...,    +##=======,..
+      ..=###### ., .....  +=====+,....
+         ###########~,..  ======
+      .....##############~=====+.....,
+      ..........###########====......
+        ............#######,==......
+      =###.,........+#####+ .......
+      ####################~......,
+      #################+======,
+         ++++++++++++ =======+
+
+Pokemon Showdown - http://pokemonshowdown.com/
+MIT license
+
+Viewing source? We're open source! Why not check out our GitHub
+repository and come help out?
+
+server: http://github.com/Zarel/Pokemon-Showdown
+client: http://github.com/Zarel/Pokemon-Showdown-Client (you are here)
+
+Also feel free to visit us in the Development chatroom:
+http://play.pokemonshowdown.com/development
+
+-->
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta id="viewport" name="viewport" content="width=device-width" />
+		<title>Showdown!</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<link rel="shortcut icon" href="https://play.pokemonshowdown.com/favicon.ico" id="dynamic-favicon" />
+		<link rel="icon" sizes="128x128" href="https://play.pokemonshowdown.com/favicon-128.png" />
+		<link rel="stylesheet" href="frontend/style/client.css?" />
+		<link rel="stylesheet" href="frontend/style/sim-types.css?" />
+		<link rel="stylesheet" href="frontend/style/battle.css?" />
+		<link rel="stylesheet" href="frontend/style/utilichart.css?" />
+		<link rel="stylesheet" href="frontend/style/font-awesome.css?" />
+		<link rel="stylesheet" href="frontend/style/jquery.slider.min.css?" />
+		<!-- meta name="mobile-web-app-capable" content="yes" / -->
+		<!-- meta name="apple-mobile-web-app-capable" content="yes" / -->
+		<meta name="robots" content="noindex" />
+		<script>
+			var Config = {};
+			Config.testclient = true;
+
+			// local
+			var port = 443;
+			var altport = 80;
+			if (document.location.port === '8000') {
+				port = 8000;
+			}
+			Config.server = {
+				id: "localhost:8000",
+				host: "localhost",
+				port: port,
+				altport: altport,
+				registered: false,
+			};
+
+		</script>
+		<!--[if lte IE 8]><script>
+			document.location.replace('http://pokemonshowdown.com/autodownload/win');
+		</script><![endif]-->
+
+		<script>
+			window.onerror = function(err, uri, line) {
+				var msg = uri + ':' + line + ': ' + err;
+				if ('ga' in window) {
+					ga('send', 'event', 'Client error', msg);
+				} else {
+					alert('ERROR: ' + msg);
+				}
+				return false;
+			};
+		</script>
+	</head>
+	<body>
+
+		<div id="header" class="header">
+			<img class="logo" src="https://play.pokemonshowdown.com/pokemonshowdownbeta.png" srcset="https://play.pokemonshowdown.com/pokemonshowdownbeta@2x.png 2x" alt="Pok&eacute;mon Showdown! (beta)" width="146" height="44" /><div class="maintabbarbottom"></div>
+		</div>
+		<div class="ps-room scrollable" id="mainmenu"><div class="mainmenuwrapper">
+			<div class="leftmenu">
+				<div class="activitymenu">
+					<div class="pmbox">
+						<div class="pm-window news-embed" data-newsid="<!-- newsid -->">
+							<h3><button class="closebutton" tabindex="-1"><i class="fa fa-times-circle"></i></button><button class="minimizebutton" tabindex="-1"><i class="fa fa-minus-circle"></i></button>News</h3>
+							<div class="pm-log" style="max-height:none">
+								<!-- news -->
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="mainmenu">
+					<div id="loading-message" class="mainmessage">Initializing... <noscript>FAILED<br /><br />Pok&eacute;mon Showdown requires JavaScript.</noscript></div>
+				</div>
+			</div>
+			<div class="rightmenu">
+			</div>
+			<div class="mainmenufooter">
+				<small><a href="//kendallpark.github.io/showdown/" target="_blank"><strong>Micro Showdown</strong></a> | <a href="http://smogon.com/" target="_blank"><strong>Smogon</strong></a><br><a href="//pokemonshowdown.com/dex/" target="_blank">Pokédex</a> | <a href="//pokemonshowdown.com/replay/" target="_blank">Replays</a> | <a href="//pokemonshowdown.com/rules" target="_blank">Rules</a> | <a href="//pokemonshowdown.com/credits" target="_blank">Credits</a> | <a href="http://smogon.com/forums/" target="_blank">Forum</a></small>
+			</div>
+		</div></div>
+		<script>
+			document.getElementById('loading-message').innerHTML += ' DONE<br />Loading libraries...';
+		</script>
+		<script src="frontend/js/lib/jquery-2.1.4.min.js"></script>
+		<script src="frontend/js/lib/jquery-cookie.js"></script>
+		<script src="frontend/js/lib/autoresize.jquery.min.js?"></script>
+		<script src="frontend/js/lib/jquery.json-2.3.min.js"></script>
+		<script src="frontend/js/lib/soundmanager2-nodebug-jsmin.js?"></script>
+		<script>
+			soundManager.setup({url: 'swf/'});
+		</script>
+		<script src="frontend/js/lib/html-css-sanitizer-minified.js?"></script>
+		<script src="frontend/js/lib/lodash.compat.js?"></script>
+		<script src="frontend/js/lib/backbone.js?"></script>
+		<script src="frontend/js/lib/d3.v3.min.js"></script>
+
+		<script>
+			document.getElementById('loading-message').innerHTML += ' DONE<br />Loading data...';
+		</script>
+
+		<script src="https://play.pokemonshowdown.com/js/config.js?"></script>
+		<script src="frontend/js/battledata.js?"></script>
+		<script src="frontend/js/storage.js?"></script>
+		<script src="frontend/data/pokedex-mini.js?"></script>
+		<script src="data/typechart.js?"></script>
+		<script src="frontend/js/battle.js?"></script>
+		<script src="frontend/js/lib/sockjs-0.3.4.min.js"></script>
+		<script src="frontend/js/lib/color-thief.min.js"></script>
+
+		<script>
+			document.getElementById('loading-message').innerHTML += ' DONE<br />Loading client...';
+		</script>
+
+		<script src="frontend/js/client.js?"></script>
+		<script src="frontend/js/client-topbar.js?"></script>
+		<script src="frontend/js/client-mainmenu.js?"></script>
+		<script src="frontend/js/client-teambuilder.js?"></script>
+		<script src="frontend/js/client-ladder.js?"></script>
+		<script src="frontend/js/client-chat.js?"></script>
+		<script src="frontend/js/client-chat-tournament.js?"></script>
+		<script src="frontend/js/client-battle-tooltips.js?"></script>
+		<script src="frontend/js/client-battle.js?"></script>
+		<script src="frontend/js/client-rooms.js?"></script>
+		<script src="frontend/data/graphics.js?"></script>
+
+		<script>
+			var app = new App();
+		</script>
+
+		<script src="frontend/js/lib/jquery.slider.min.js?"></script>
+
+		<script src="data/pokedex.js?"></script>
+		<script src="data/moves.js?"></script>
+		<script src="data/items.js?"></script>
+		<script src="data/abilities.js?"></script>
+
+		<script src="https://play.pokemonshowdown.com/data/search-index.js?"></script>
+		<script src="tools.js?"></script>
+		<script src="frontend/data/teambuilder-tables.js?"></script>
+		<script src="https://play.pokemonshowdown.com/js/search.js?"></script>
+
+		<script src="data/aliases.js?" async="async"></script>
+
+	</body>
+</html>
