@@ -53,12 +53,16 @@ http://play.pokemonshowdown.com/development
 			// local
 			var port = 443;
 			var altport = 80;
+			var serverid = 'microduel.herokuapp.com';
+			var host = 'microduel.herokuapp.com';
 			if (document.location.port === '8000') {
 				port = 8000;
+				serverid = "localhost:8000";
+				host = "localhost";
 			}
 			Config.server = {
-				id: "localhost:8000",
-				host: "localhost",
+				id: serverid,
+				host: host,
 				port: port,
 				altport: altport,
 				registered: false,
