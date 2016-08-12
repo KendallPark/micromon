@@ -57,12 +57,10 @@ http://play.pokemonshowdown.com/development
 			var host = 'microduel.herokuapp.com';
 			if (document.location.port === '8000') {
 				port = 8000;
-				serverid = "localhost:8000";
-				host = "localhost";
 			}
 			Config.server = {
-				id: serverid,
-				host: host,
+				id: document.location.host,
+				host: document.location.hostname,
 				port: port,
 				altport: altport,
 				registered: false,
@@ -169,7 +167,6 @@ http://play.pokemonshowdown.com/development
 		<script src="data/abilities.js?"></script>
 
 		<script src="https://play.pokemonshowdown.com/data/search-index.js?"></script>
-		<script src="tools.js?"></script>
 		<script src="frontend/data/teambuilder-tables.js?"></script>
 		<script src="https://play.pokemonshowdown.com/js/search.js?"></script>
 
