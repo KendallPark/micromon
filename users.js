@@ -605,64 +605,67 @@ class User {
 			return false;
 		}
 
-		if (token && token.charAt(0) !== ';') {
-			let tokenSemicolonPos = token.indexOf(';');
-			let tokenData = token.substr(0, tokenSemicolonPos);
-			let tokenSig = token.substr(tokenSemicolonPos + 1);
+		this.validateRename(name, name, newlyRegistered, challenge);
 
-			Verifier.verify(tokenData, tokenSig).then(success => {
-				if (!success) {
-					console.log('verify failed: ' + token);
-					console.log('challenge was: ' + challenge);
-					return;
-				}
-				this.validateRename(name, tokenData, newlyRegistered, challenge);
-			});
-		} else {
-			this.send('|nametaken|' + name + "|Your authentication token was invalid.");
-		}
+		// if (token && token.charAt(0) !== ';') {
+		// 	let tokenSemicolonPos = token.indexOf(';');
+		// 	let tokenData = token.substr(0, tokenSemicolonPos);
+		// 	let tokenSig = token.substr(tokenSemicolonPos + 1);
+		//
+		// 	Verifier.verify(tokenData, tokenSig).then(success => {
+		// 		if (!success) {
+		// 			console.log('verify failed: ' + token);
+		// 			console.log('challenge was: ' + challenge);
+		// 			return;
+		// 		}
+		// 		this.validateRename(name, tokenData, newlyRegistered, challenge);
+		// 	});
+		// } else {
+		// 	this.send('|nametaken|' + name + "|Your authentication token was invalid.");
+		// }
 
 		return false;
 	}
 	validateRename(name, tokenData, newlyRegistered, challenge) {
 		let userid = toId(name);
 
-		let tokenDataSplit = tokenData.split(',');
+		// let tokenDataSplit = tokenData.split(',');
+		//
+		// if (tokenDataSplit.length < 5) {
+		// 	console.log('outdated assertion format: ' + tokenData);
+		// 	this.send('|nametaken|' + name + "|Your assertion is stale. This usually means that the clock on the server computer is incorrect. If this is your server, please set the clock to the correct time.");
+		// 	return;
+		// }
+		//
+		// if (tokenDataSplit[1] !== userid) {
+		// 	// userid mismatch
+		// 	return;
+		// }
+		//
+		// if (tokenDataSplit[0] !== challenge) {
+		// 	// a user sent an invalid token
+		// 	if (tokenDataSplit[0] !== challenge) {
+		// 		Monitor.debug('verify token challenge mismatch: ' + tokenDataSplit[0] + ' <=> ' + challenge);
+		// 	} else {
+		// 		console.log('verify token mismatch: ' + tokenData);
+		// 	}
+		// 	return;
+		// }
+		//
+		// let expiry = Config.tokenexpiry || 25 * 60 * 60;
+		// if (Math.abs(parseInt(tokenDataSplit[3]) - Date.now() / 1000) > expiry) {
+		// 	console.log('stale assertion: ' + tokenData);
+		// 	this.send('|nametaken|' + name + "|Your assertion is stale. This usually means that the clock on the server computer is incorrect. If this is your server, please set the clock to the correct time.");
+		// 	return;
+		// }
+		//
+		// // future-proofing
+		// this.s1 = tokenDataSplit[5];
+		// this.s2 = tokenDataSplit[6];
+		// this.s3 = tokenDataSplit[7];
 
-		if (tokenDataSplit.length < 5) {
-			console.log('outdated assertion format: ' + tokenData);
-			this.send('|nametaken|' + name + "|Your assertion is stale. This usually means that the clock on the server computer is incorrect. If this is your server, please set the clock to the correct time.");
-			return;
-		}
-
-		if (tokenDataSplit[1] !== userid) {
-			// userid mismatch
-			return;
-		}
-
-		if (tokenDataSplit[0] !== challenge) {
-			// a user sent an invalid token
-			if (tokenDataSplit[0] !== challenge) {
-				Monitor.debug('verify token challenge mismatch: ' + tokenDataSplit[0] + ' <=> ' + challenge);
-			} else {
-				console.log('verify token mismatch: ' + tokenData);
-			}
-			return;
-		}
-
-		let expiry = Config.tokenexpiry || 25 * 60 * 60;
-		if (Math.abs(parseInt(tokenDataSplit[3]) - Date.now() / 1000) > expiry) {
-			console.log('stale assertion: ' + tokenData);
-			this.send('|nametaken|' + name + "|Your assertion is stale. This usually means that the clock on the server computer is incorrect. If this is your server, please set the clock to the correct time.");
-			return;
-		}
-
-		// future-proofing
-		this.s1 = tokenDataSplit[5];
-		this.s2 = tokenDataSplit[6];
-		this.s3 = tokenDataSplit[7];
-
-		this.handleRename(name, userid, newlyRegistered, tokenDataSplit[2]);
+		// this.handleRename(name, userid, newlyRegistered, tokenDataSplit[2]);
+		this.handleRename(name, userid, newlyRegistered, 2);
 	}
 	handleRename(name, userid, newlyRegistered, userType) {
 		let conflictUser = users.get(userid);
