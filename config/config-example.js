@@ -174,6 +174,13 @@ exports.customavatars = {
 	//'userid': 'customavatar.png'
 };
 
+// If you have your own mods that contain custom moves/items, you'll need to
+// build a BattleTeambuilderTable for the client to use. This is important for
+// the correct move/item descriptions to show up on client.
+// Serving this table will increase your bandwidth so use at your own risk!
+// (Most likely your server does not receive enough traffic for this to hurt.)
+exports.serveteambuildertables = false;
+
 // tourroom - specify a room to receive tournament announcements (defaults to
 // the room 'tournaments').
 // tourannouncements - announcements are only allowed in these rooms

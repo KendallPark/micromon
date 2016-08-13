@@ -215,6 +215,32 @@ if (cluster.isMaster) {
 				} else if (request.url.substr(0, 9) === '/avatars/') {
 					request.url = request.url.substr(8);
 					server = avatarserver;
+				} else if (Config.serveteambuildertables && request.url.substr(0, 19) === '/teambuilder-tables') {
+					server = {
+						serve: (req, res, callback) => {
+							var format = request.url.substr(20, request.url.length);
+							try {
+								const teambuildertables = require('./teambuilder-tables.js').BattleTeambuilderTable;
+								let buf = '// served because Config.serveteambuildertables is set to true \n\n';
+								if (format === 'js') {
+									buf += 'exports.BattleTeambuilderTable = ' + JSON.stringify(teambuildertables) + ';\n\n';
+									res.setHeader('Content-type', 'text/javascript');
+								} else if (format === 'json') {
+									res.setHeader('Content-type', 'application/json');
+									buf += JSON.stringify(teambuildertables);
+								} else {
+									callback({ status: 404 });
+									return;
+								}
+								res.charset = 'UTF-8';
+								res.write(buf);
+								res.end();
+							} catch (err) {
+								throw err;
+								callback({ status: 404 });
+							}
+						}
+					}
 				} else {
 					if (/^\/([A-Za-z0-9][A-Za-z0-9-]*)\/?$/.test(request.url)) {
 						request.url = '/';
