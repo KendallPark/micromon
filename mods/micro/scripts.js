@@ -15,20 +15,19 @@ exports.BattleScripts = {
   },
   randomTeam: function (side) {
     let pokemon = [];
+    const first = side.n === 0
 
     let n = 1;
 		let pokemonPool = [];
+    const cat = first ? "micro" : "defender";
     for (let id in this.data.FormatsData) {
-      // FIXME: Not ES-compliant
-      console.log(this.data.FormatsData[id]);
-      if (n++ <= 151 && this.data.FormatsData[id] && this.data.FormatsData[id].randomBattleMoves && this.data.FormatsData[id].category === "micro") {
+      // if (n++ <= 251 && this.data.FormatsData[id] && this.data.FormatsData[id].randomBattleMoves && this.data.FormatsData[id].category === cat) {
+      if (n++ <= 251 && this.data.FormatsData[id] && this.data.FormatsData[id].randomBattleMoves && (this.data.FormatsData[id].category === "micro" || this.data.FormatsData[id].category === "defender" )) {
         pokemonPool.push(id);
       }
     }
 
-    console.log(pokemonPool.length);
-
-    for (let mon in pokemonPool.slice(0, 6)) {
+    while (pokemon.length <= 6 && pokemonPool.length > 0) {
       let template = this.getTemplate(this.sampleNoReplace(pokemonPool));
       let set = this.randomSet(template, pokemon.length);
       pokemon.push(set);
