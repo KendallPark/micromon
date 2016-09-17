@@ -225,7 +225,8 @@ if (cluster.isMaster) {
 						serve: (req, res, callback) => {
 							var format = request.url.substr(20, request.url.length);
 							try {
-								const teambuildertables = require('./teambuilder-tables.js').BattleTeambuilderTable;
+								const tables = require('./teambuilder-tables.js');
+								const teambuildertables = tables.BattleTeambuilderTable;
 								let buf = '// served because Config.serveteambuildertables is set to true \n\n';
 								if (format === 'js') {
 									buf += 'exports.BattleTeambuilderTable = ' + JSON.stringify(teambuildertables) + ';\n\n';
@@ -233,6 +234,34 @@ if (cluster.isMaster) {
 								} else if (format === 'json') {
 									res.setHeader('Content-type', 'application/json');
 									buf += JSON.stringify(teambuildertables);
+								} else {
+									callback({ status: 404 });
+									return;
+								}
+								res.charset = 'UTF-8';
+								res.write(buf);
+								res.end();
+							} catch (err) {
+								throw err;
+								callback({ status: 404 });
+							}
+						}
+					}
+				} else if (Config.serveteambuildertables && request.url.substr(0, 8) === '/aliases') {
+					server = {
+						serve: (req, res, callback) => {
+							var format = request.url.substr(9, request.url.length);
+							try {
+								const origAliases = require('./data/aliases.js').BattleAliases;
+								const moreAliases = require('./teambuilder-tables.js').moreAliases;
+								const aliases = Object.assign({}, origAliases, moreAliases);
+								let buf = '// served because Config.serveteambuildertables is set to true \n\n';
+								if (format === 'js') {
+									buf += 'exports.BattleAliases = ' + JSON.stringify(aliases) + ';\n\n';
+									res.setHeader('Content-type', 'text/javascript');
+								} else if (format === 'json') {
+									res.setHeader('Content-type', 'application/json');
+									buf += JSON.stringify(aliases);
 								} else {
 									callback({ status: 404 });
 									return;

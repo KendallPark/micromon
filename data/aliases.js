@@ -1,6 +1,17 @@
 'use strict';
 
-exports.BattleAliases = {
+const moves = require('../mods/micro/moves.js').BattleMovedex;
+const allMoves = require('./moves.js').BattleMovedex;
+
+const aliases = {};
+
+for (const move in moves) {
+	const text = ('' + moves[move].name).toLowerCase().replace(/[^a-z0-9]+/g, '');
+	if (!allMoves[move]) continue;
+	aliases[text] = allMoves[move].name;
+}
+
+const moreAliases = {
 	// formats
 	"randbats": "Random Battle",
 	"randdubs": "Random Doubles Battle",
@@ -468,3 +479,5 @@ exports.BattleAliases = {
 	congenitaldefect: 'Night Shade',
 	endoflagellate: 'Whirlwind',
 };
+
+exports.BattleAliases = Object.assign({}, moreAliases, aliases);

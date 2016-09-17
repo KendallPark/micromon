@@ -12,6 +12,8 @@
 'use strict';
 
 const BattleTeambuilderTable = {};
+const moreAliases = {};
+
 
 const Tools = require('./tools.js');
 Tools.includeData();
@@ -33,25 +35,6 @@ for (const genIdent of [6, -6, 5, 4, 3, 2, 1]) {
     })();
     if (template.gen > genNum) continue;
     const tier = (() => {
-      if (isDoubles) {
-        let banlist = Tools.getFormat('doublesou').banlist;
-        if (banlist.indexOf(template.species) >= 0 || banlist.indexOf(template.baseSpecies) >= 0) {
-          return "DUber";
-        }
-        banlist = Tools.getFormat('doublesuu').banlist;
-        if (banlist.indexOf(template.species) >= 0 || banlist.indexOf(template.baseSpecies) >= 0) {
-          return "DOU";
-        }
-        banlist = Tools.getFormat('doublesnu').banlist;
-        if (banlist) {
-          if (banlist.indexOf(template.species) >= 0 || banlist.indexOf(template.baseSpecies) >= 0) {
-            return "DUU";
-          }
-        }
-        if (template.tier === 'LC' || template.tier === 'LC Ubers' || template.tier === 'NFE') return 'NFE';
-        if (!banlist) return "DUU";
-        return "DNU";
-      }
       return template.tier;
     })();
     if (template.forme) {
@@ -314,9 +297,14 @@ const getOverrides = (genData, nextGenData, startingOverrides={}) => {
   let overrides = Object.assign({}, startingOverrides);
   const overrideStats = {};
   overrides.overrideStats = overrideStats;
+  const overrideType = {};
+  overrides.overrideType = overrideType;
   for (const id in genData.Pokedex) {
     const pastEntry = genData.Pokedex[id];
     const nowEntry = Tools.data.Pokedex[id];
+    if (!(JSON.stringify(pastEntry.types.sort()) === JSON.stringify(nowEntry.types.sort()))) {
+      overrideType[id] = pastEntry.types;
+    }
     for (const stat in pastEntry.baseStats) {
       if (stat === 'spd' && genData.Scripts.gen === 1) continue;
       if (pastEntry.baseStats[stat] !== nowEntry.baseStats[stat]) {
@@ -334,10 +322,15 @@ const getOverrides = (genData, nextGenData, startingOverrides={}) => {
   overrides.overridePP = overridePP;
   const overrideMoveDesc = {};
   overrides.overrideMoveDesc = overrideMoveDesc;
+  const overrideName = {};
+  overrides.overrideName = overrideName;
+  const overrideMoveType = {};
+  overrides.overrideMoveType = overrideMoveType;
   for (const id in genData.Movedex) {
     const pastEntry = genData.Movedex[id];
     const nowEntry = Tools.data.Movedex[id];
     const nextEntry = nextGenData.Movedex[id];
+    if (!pastEntry || !nowEntry || !nextEntry) continue;
     if (pastEntry.basePower !== nowEntry.basePower) {
       overrideBP[id] = pastEntry.basePower;
     }
@@ -347,8 +340,16 @@ const getOverrides = (genData, nextGenData, startingOverrides={}) => {
     if (pastEntry.pp !== nowEntry.pp) {
       overridePP[id] = pastEntry.pp;
     }
-    if (pastEntry.shortDesc !== nextEntry.shortDesc) {
-      overrideMoveDesc[id] = pastEntry.shortDesc;
+    if (pastEntry.desc !== nextEntry.desc) {
+      overrideMoveDesc[id] = pastEntry.desc +"<br/>---<br/>"+ pastEntry.shortDesc;
+    }
+    if (pastEntry.type !== nextEntry.type) {
+      overrideMoveType[id] = pastEntry.type;
+    }
+    if (pastEntry.name !== nextEntry.name) {
+      overrideName[id] = pastEntry.name;
+      var text = ('' + pastEntry.name).toLowerCase().replace(/[^a-z0-9]+/g, '');
+      moreAliases[text] = nowEntry.name;
     }
   }
 
@@ -393,4 +394,5 @@ for (const canonGenName of Object.keys(canonModsByGen).sort().reverse()) {
   genNextData = genData;
 }
 
+exports.moreAliases = moreAliases;
 exports.BattleTeambuilderTable = BattleTeambuilderTable;
